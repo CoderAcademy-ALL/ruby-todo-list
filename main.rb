@@ -8,6 +8,9 @@
 # 4. Remove a task from the list
 
 require_relative 'list'
+require "tty-prompt"
+
+prompt = TTY::Prompt.new
 
 def greeting
   puts "Hi!"
@@ -16,14 +19,15 @@ def greeting
   print "> "
 end
 
-def menu
-  puts "Please choose an option:"
-  puts "1: View the to-do list"
-  puts "2: Add a task to the list"
-  puts "3: Remove a task from the list"
-  puts "4: Quit"
-  puts
-  print "> "
+def menu(prompt)
+  choices = [
+  {name: "View the to-do list", value: 1},
+  {name: "Add a task to the list", value: 2},
+  {name: "Remove a task from the list", value: 3},
+  {name: "Quit", value: 4}
+  ]
+
+  prompt.select("Please choose an option:", choices)
 end
 
 
@@ -39,9 +43,7 @@ name = gets.strip.downcase
 todo = List.new(name)
 
 loop do
-  menu
-
-  case gets.to_i
+  case menu(prompt)
   when 1
     todo.view
   when 2
