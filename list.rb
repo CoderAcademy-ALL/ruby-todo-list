@@ -25,7 +25,7 @@ class List
 
   def add
   # check whether the file exists and read into an array, otherwise create a new file
-  system 'clear'
+    system 'clear'
     puts  "Add a task to the list:"
     puts
     print "> "
@@ -39,7 +39,16 @@ class List
   end
 
   def remove
-    puts "Remove a task from the list"
+    system 'clear'
+    puts "Remove a task from the list:"
+    @list = file_to_array(@file_path)
+    view
+    puts "Enter the task number:"
+    print "> "
+    task_no = gets.to_i - 1
+    @list.delete_at task_no
+    puts "Success!"
+    array_to_file(@list)
   end
 
   private
